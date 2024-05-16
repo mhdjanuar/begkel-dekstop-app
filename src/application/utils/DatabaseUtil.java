@@ -24,20 +24,24 @@ public class DatabaseUtil {
              
     private DatabaseUtil() {
         try {
+            System.out.print("db utils");
             Properties properties = new Properties();
             properties.setProperty("user", USERNAME);
             properties.setProperty("password", PASSWORD);
             properties.setProperty("MaxPooledStatements", MAX_POOL);
-        
+  
             Class.forName(DRIVER);
             connection = DriverManager.getConnection(URL, properties);
             System.out.println("Connection to the database established successfully");       
         } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("err" + e);
             throw new RuntimeException(e);
         }
     }
 
     public static DatabaseUtil getInstance(){
+        System.out.print("asd");
+        System.out.print(instance);
         if (instance == null) {
             instance = new DatabaseUtil();
         }else{

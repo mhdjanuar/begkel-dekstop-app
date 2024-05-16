@@ -12,7 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import application.dao.UserDao;
 import application.utils.DatabaseUtil;
-
 /**
  *
  * @author yusuf
@@ -32,7 +31,6 @@ public class LoginView extends javax.swing.JFrame {
     public void dispose() {
         // Your custom disposal logic here
         System.out.println("Disposing resources...");
-        DatabaseUtil.getInstance().closeConnection();
         super.dispose();
     }
     
@@ -60,7 +58,6 @@ public class LoginView extends javax.swing.JFrame {
                     JOptionPane.YES_NO_OPTION);
 
                 if (result == JOptionPane.YES_OPTION){
-                    DatabaseUtil.getInstance().closeConnection();
                     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     System.exit(0);
                 }
@@ -144,6 +141,7 @@ public class LoginView extends javax.swing.JFrame {
         String password = textFieldPassword.getText();
        
         UserModel userFound = userDao.findOneByUsernameAndPassword(username, password);
+        
         if(userFound == null) {
             JOptionPane.showMessageDialog(null, "Username atau Password Anda Salah");  
             this.clearForm();
@@ -151,7 +149,9 @@ public class LoginView extends javax.swing.JFrame {
             if(userFound.authenticate(username, password) == true){
                 this.clearForm();
                 this.dispose();
-                JOptionPane.showMessageDialog(null, "Berhasil Masuk");   
+                JOptionPane.showMessageDialog(null, "Berhasil Masuk"); 
+                
+                new MainMenu().start();
             }else{
                 JOptionPane.showMessageDialog(null, "Username atau Password Anda Salah");
             }

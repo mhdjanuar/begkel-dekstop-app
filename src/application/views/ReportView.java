@@ -92,6 +92,11 @@ public class ReportView extends javax.swing.JFrame {
                 jButton1MouseClicked(evt);
             }
         });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,11 +121,11 @@ public class ReportView extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         try {
             // TODO add your handling code here:
-            String templateName = "UserDataReport.jrxml";
+            String templateName = "carReport.jrxml";
             InputStream reportStream = ReportView.class.getResourceAsStream("/resources/reports/" + templateName);
             JasperDesign jd = JRXmlLoader.load(reportStream);
-            
             Connection dbConnection = DatabaseUtil.getInstance().getConnection();
+            
             JasperReport jr = JasperCompileManager.compileReport(jd);
             
             HashMap parameter = new HashMap();
@@ -136,6 +141,10 @@ public class ReportView extends javax.swing.JFrame {
             Logger.getLogger(ReportView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

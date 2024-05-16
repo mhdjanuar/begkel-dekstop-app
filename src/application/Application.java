@@ -20,9 +20,9 @@ public class Application {
         try {
             Config.load();
             DatabaseUtil.getInstance().getConnection();
-            GenerateUser.start();
+//            GenerateUser.start();
             new LoginView().start();
-            new ReportView().start();
+//              new ReportView().start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
