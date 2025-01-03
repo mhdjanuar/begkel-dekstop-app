@@ -38,15 +38,12 @@ public class TransactionDaoImpl implements TransactionDao {
         System.out.print(transaction.getWorkingEstimate());
         
         try {
-            query = "INSERT INTO working_transaction_service(kode_transaction, kode_car, kode_service, working_estimate, price_total) " +
-                    "VALUES(?, ?, ?, ?, ?)";
+            query = "INSERT INTO working_transaction_service(kode_transaction, kode_service) " +
+                    "VALUES(?, ?)";
             
             pstmt = dbConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, transaction.getKodeTransaction());
-            pstmt.setString(2, transaction.getKodeCar());
-            pstmt.setString(3, transaction.getKodeService());
-            pstmt.setString(4, transaction.getWorkingEstimate());
-            pstmt.setInt(5, transaction.getPriceTotal());
+            pstmt.setString(2, transaction.getKodeService());
             
             int result = pstmt.executeUpdate();
             resultSet = pstmt.getGeneratedKeys();
@@ -62,15 +59,12 @@ public class TransactionDaoImpl implements TransactionDao {
     @Override
     public int createTransactionSparepart(ListWorkingModel transaction) {
         try {
-            query = "INSERT INTO working_transaction_sparepart(kode_transaction, kode_car, kode_sparepart, working_estimate, price_total) " +
-                    "VALUES(?, ?, ?, ?, ?)";
+            query = "INSERT INTO working_transaction_sparepart(kode_transaction, kode_sparepart) " +
+                    "VALUES(?, ?)";
             
             pstmt = dbConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, transaction.getKodeTransaction());
-            pstmt.setString(2, transaction.getKodeCar());
-            pstmt.setString(3, transaction.getKodeSparepart());
-            pstmt.setString(4, transaction.getWorkingEstimate());
-            pstmt.setInt(5, transaction.getPriceTotal());
+            pstmt.setString(2, transaction.getKodeSparepart());
             
             int result = pstmt.executeUpdate();
             resultSet = pstmt.getGeneratedKeys();
@@ -110,6 +104,29 @@ public class TransactionDaoImpl implements TransactionDao {
             }   
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int createTransaction(ListWorkingModel transaction) {
+        try {
+            query = "INSERT INTO working_transaction(kode_transaction, working_estimate, price_total, kode_car) " +
+                    "VALUES(?, ?, ?, ?)";
+            
+            pstmt = dbConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, transaction.getKodeTransaction());
+            pstmt.setInt(2, transaction.getWorkingEstimate());
+            pstmt.setInt(3, transaction.getPriceTotal());
+            pstmt.setString(4, transaction.getKodeCar());
+            
+            int result = pstmt.executeUpdate();
+            resultSet = pstmt.getGeneratedKeys();
+            return result;
+	} catch (SQLException e) {
+            // e.printStackTrace();
+            throw new RuntimeException(e);
+        } finally {
+            closeStatement();
         }
     }
     

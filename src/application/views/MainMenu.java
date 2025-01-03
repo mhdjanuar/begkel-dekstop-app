@@ -139,6 +139,11 @@ public class MainMenu extends javax.swing.JFrame {
         });
 
         jButton4.setText("User");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -340,7 +345,7 @@ public class MainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
             try {
                 // TODO add your handling code here:
-                String templateName = "CarInReport.jrxml";
+                String templateName = "ReportMobil.jrxml";
                 InputStream reportStream = ReportView.class.getResourceAsStream("/resources/reports/" + templateName);
                 JasperDesign jd = JRXmlLoader.load(reportStream);
 
@@ -362,7 +367,7 @@ public class MainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
            try {
             // TODO add your handling code here:
-            String templateName = "SalesReport.jrxml";
+            String templateName = "ReportPenjualan.jrxml";
             InputStream reportStream = ReportView.class.getResourceAsStream("/resources/reports/" + templateName);
             JasperDesign jd = JRXmlLoader.load(reportStream);
                 
@@ -371,7 +376,7 @@ public class MainMenu extends javax.swing.JFrame {
             JasperReport jr = JasperCompileManager.compileReport(jd);
             
             HashMap parameter = new HashMap();
-            parameter.put("PATH_IMG","src/resources/images/");
+            parameter.put("PATH","src/resources/images/");
 
             JasperPrint jp = JasperFillManager.fillReport(jr,parameter, dbConnection);
             JasperViewer.viewReport(jp, false);
@@ -401,6 +406,12 @@ public class MainMenu extends javax.swing.JFrame {
             Logger.getLogger(ReportView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        new ListuserView().start();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

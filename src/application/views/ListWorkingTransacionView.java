@@ -196,7 +196,7 @@ public class ListWorkingTransacionView extends javax.swing.JFrame {
         if (result == JOptionPane.YES_OPTION){
              try {
                 // TODO add your handling code here:
-                String templateName = "InvoiceTransaction.jrxml";
+                String templateName = "InvoiceReport.jrxml";
                 InputStream reportStream = ReportView.class.getResourceAsStream("/resources/reports/" + templateName);
                 JasperDesign jd = JRXmlLoader.load(reportStream);
 
@@ -205,7 +205,7 @@ public class ListWorkingTransacionView extends javax.swing.JFrame {
                 JasperReport jr = JasperCompileManager.compileReport(jd);
 
                 HashMap parameter = new HashMap();
-                parameter.put("KodeTransaction",kodeTransaksi);
+                parameter.put("kodeTransaksi", kodeTransaksi);
 
                 JasperPrint jp = JasperFillManager.fillReport(jr,parameter, dbConnection);
                 JasperViewer.viewReport(jp, false);
@@ -685,10 +685,7 @@ public class ListWorkingTransacionView extends javax.swing.JFrame {
             ListWorkingModel listWorking = new ListWorkingModel();
             
             listWorking.setKodeTransaction(kode);
-            listWorking.setKodeCar(kodeCarIn);
             listWorking.setKodeService(service.getKode());
-            listWorking.setWorkingEstimate(workingEstimate);
-            listWorking.setPriceTotal(priceTotal);
             
             saveTransactionService.add(listWorking);
         }
@@ -697,16 +694,20 @@ public class ListWorkingTransacionView extends javax.swing.JFrame {
             ListWorkingModel listWorking = new ListWorkingModel();
             
             listWorking.setKodeTransaction(kode);
-            listWorking.setKodeCar(kodeCarIn);
             listWorking.setKodeSparepart(sparepart.getKode());
-            listWorking.setWorkingEstimate(workingEstimate);
-            listWorking.setPriceTotal(priceTotal);
-            listWorking.setStock(sparepart.getStock());
             
             saveTransactionSparepart.add(listWorking);
         }
                 
         try {
+            ListWorkingModel transaction = new ListWorkingModel();
+            transaction.setKodeTransaction(kode);
+            transaction.setKodeCar(kodeCarIn);
+            transaction.setWorkingEstimate(Integer.parseInt(workingEstimate));
+            transaction.setPriceTotal(priceTotal);
+            
+            transactionDao.createTransaction(transaction);
+            
             for (ListWorkingModel working : saveTransactionService) {
                 transactionDao.createTransactionService(working);
             }

@@ -13,7 +13,7 @@ public class ListWorkingModel {
     private String kodeCar;
     private String kodeService;
     private String kodeSparepart;
-    private String workingEstimate;
+    private int workingEstimate;
     private int stock;
     private int priceTotal;
     
@@ -90,14 +90,14 @@ public class ListWorkingModel {
     /**
      * @return the workingEstimate
      */
-    public String getWorkingEstimate() {
+    public int getWorkingEstimate() {
         return workingEstimate;
     }
 
     /**
      * @param workingEstimate the workingEstimate to set
      */
-    public void setWorkingEstimate(String workingEstimate) {
+    public void setWorkingEstimate(int workingEstimate) {
         this.workingEstimate = workingEstimate;
     }
 

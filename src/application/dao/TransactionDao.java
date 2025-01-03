@@ -18,6 +18,8 @@ public interface TransactionDao {
     
     public int createTransactionSparepart(ListWorkingModel transaction);
     
+    public int createTransaction(ListWorkingModel transaction);
+    
     public int upsert(ListWorkingModel transaction);
     
     public int update(ListWorkingModel transaction);

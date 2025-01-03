@@ -19,6 +19,8 @@ public interface UserDao {
     
     public List<UserModel> findAll();
     
+    public int findUser(UserModel user);
+    
     public int create(UserModel user);
     
     public int upsert(UserModel user);

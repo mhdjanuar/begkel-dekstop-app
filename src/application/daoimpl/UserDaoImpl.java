@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.List;
 import application.dao.UserDao;
 import application.utils.DatabaseUtil;
+import java.util.ArrayList;
 
 /**
  *
@@ -63,7 +64,30 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<UserModel> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<UserModel> users = new ArrayList<>();
+        
+        try {
+            query = "SELECT * FROM users";
+            pstmt = dbConnection.prepareStatement(query);
+            resultSet = pstmt.executeQuery();
+            
+            while (resultSet.next()) {
+                UserModel user = new UserModel();
+                user.setName(resultSet.getString("name"));
+                user.setUsername(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+                user.setPhoneNumber(resultSet.getString("phone_number"));
+                // Set other attributes accordingly
+                users.add(user);
+            }
+	} catch (SQLException e) {
+            // e.printStackTrace();
+            throw new RuntimeException(e);
+        } finally {
+            closeStatement();
+        }
+        
+        return users;
     }
 
     @Override
@@ -108,12 +132,42 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int update(UserModel user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            query = "UPDATE `users` SET `name`= ?,`phone_number`= ?,`username`= ?,`password`= ? WHERE id = ?";
+            
+            pstmt = dbConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, user.getName());
+            pstmt.setString(2, user.getPhoneNumber());
+            pstmt.setString(3, user.getUsername());
+            pstmt.setString(4, user.getPassword());
+            pstmt.setInt(5, user.getId());
+            
+            int result = pstmt.executeUpdate();
+            resultSet = pstmt.getGeneratedKeys();
+            return result;
+	} catch (SQLException e) {
+            // e.printStackTrace();
+            throw new RuntimeException(e);
+        } finally {
+            closeStatement();
+        }
     }
 
     @Override
     public void delete(UserModel user) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            query = "DELETE FROM users WHERE id = ?";
+
+            pstmt = dbConnection.prepareStatement(query);
+            pstmt.setInt(1, user.getId());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            // e.printStackTrace();
+            throw new RuntimeException(e);
+        } finally {
+            closeStatement();
+        }
     }
 
     private void closeStatement() {
@@ -129,5 +183,10 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public int findUser(UserModel user) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
