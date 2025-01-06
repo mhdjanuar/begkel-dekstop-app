@@ -177,6 +177,11 @@ public class ListCarInView extends javax.swing.JFrame {
                 jTextField4ActionPerformed(evt);
             }
         });
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField4KeyTyped(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -392,6 +397,15 @@ public class ListCarInView extends javax.swing.JFrame {
         // TODO add your handling code here:
         resetField();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        // Allow only digits
+        if (!Character.isDigit(c)) {
+            evt.consume(); // Ignore the event
+        }
+    }//GEN-LAST:event_jTextField4KeyTyped
 
     /**
      * @param args the command line arguments

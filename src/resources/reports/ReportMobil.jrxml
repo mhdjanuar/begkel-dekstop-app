@@ -114,12 +114,12 @@ LIMIT 1]]>
 			<frame>
 				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="100" forecolor="#FFFCFC" backcolor="#080808" uuid="28768e12-f29a-4286-bf6d-6c0f93628afc"/>
 				<staticText>
-					<reportElement x="231" y="10" width="133" height="30" forecolor="#FCFAFA" uuid="9bec1d72-afe4-47e2-a81e-c533a7e4ad92"/>
+					<reportElement x="190" y="10" width="209" height="30" forecolor="#FCFAFA" uuid="4142ccbd-ca8e-4b1e-bf45-c1139869eb37"/>
 					<textElement textAlignment="Center">
 						<font fontName="Times New Roman" size="20" isBold="true"/>
 						<paragraph lineSpacingSize="1.0"/>
 					</textElement>
-					<text><![CDATA[GG Car]]></text>
+					<text><![CDATA[Setia Jaya Motor]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="190" y="40" width="221" height="20" forecolor="#FFFAFA" uuid="b940bb63-5321-4c7c-85e7-ef48974c06a8"/>
@@ -133,8 +133,8 @@ LIMIT 1]]>
 					<text><![CDATA[Kec Cilandak, Kota Jakarta Selatan]]></text>
 				</staticText>
 				<image>
-					<reportElement x="40" y="25" width="50" height="50" uuid="03e005fa-6852-4b5d-9a7d-bb3be110c830"/>
-					<imageExpression><![CDATA[$P{PATH}+"invoice_logo.png"]]></imageExpression>
+					<reportElement x="40" y="25" width="100" height="100" uuid="8f4dd41d-2de6-40fb-9201-0886d91b9b74"/>
+					<imageExpression><![CDATA[$P{PATH}+"invoice_logo.jpeg"]]></imageExpression>
 				</image>
 			</frame>
 		</band>

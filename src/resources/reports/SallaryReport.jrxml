@@ -193,9 +193,9 @@
 					<reportElement x="210" y="60" width="170" height="20" forecolor="#FCFAFA" uuid="e78b87bb-88f4-42e1-a3eb-b61e5b86380b"/>
 					<text><![CDATA[Kec Cilandak, Kota Jakarta Selatan]]></text>
 				</staticText>
-				<image>
-					<reportElement x="40" y="25" width="50" height="50" uuid="6a64f865-ed9f-41ba-ae09-8c8541bce175"/>
-					<imageExpression><![CDATA[$P{PATH_IMG}+"invoice_logo.png"]]></imageExpression>
+                                <image>
+					<reportElement x="40" y="25" width="100" height="100" uuid="8f4dd41d-2de6-40fb-9201-0886d91b9b74"/>
+					<imageExpression><![CDATA[$P{PATH_IMG}+"invoice_logo.jpeg"]]></imageExpression>
 				</image>
 			</frame>
 		</band>

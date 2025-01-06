@@ -9,8 +9,10 @@ import application.daoimpl.ServiceDaoImpl;
 import application.models.ServiceModel;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -41,10 +43,13 @@ public class ListServiceView extends javax.swing.JFrame {
         
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(new Object[]{"Kode", "Nama", "Dekripsi", "Harga"}); // Adjust column names as needed
+        
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
 
         // Populate the model with data from spareparts
         for (ServiceModel service : services) {
-            model.addRow(new Object[]{service.getKode(), service.getName(), service.getDesc(), service.getPrice()}); // Add more attributes as needed
+            String formattedPrice = currencyFormat.format(service.getPrice()); // Format price as "Rp"
+            model.addRow(new Object[]{service.getKode(), service.getName(), service.getDesc(), formattedPrice}); // Add more attributes as needed
         }
         
         // Set the table model to jTable1
@@ -52,7 +57,7 @@ public class ListServiceView extends javax.swing.JFrame {
     }
     
     public void resetField() {
-        String randomKode = "SPR-" + generateRandomString(6); 
+        String randomKode = "SVC-" + generateRandomString(6); 
         
         jTextField1.setText(randomKode);
         jTextField2.setText("");
@@ -171,6 +176,12 @@ public class ListServiceView extends javax.swing.JFrame {
         jLabel5.setText("Harga");
 
         jTextField1.setEnabled(false);
+
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField4KeyTyped(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -345,7 +356,14 @@ public class ListServiceView extends javax.swing.JFrame {
         jTextField1.setText((String) tblSparepart.getValueAt(row, 0));
         jTextField2.setText((String) tblSparepart.getValueAt(row, 1));
         jTextArea1.setText(String.valueOf(tblSparepart.getValueAt(row, 2)));
-        jTextField4.setText(String.valueOf(tblSparepart.getValueAt(row, 3)));
+        
+        // Extract numeric value from the "Harga" column
+        String hargaWithRp = (String) tblSparepart.getValueAt(row, 3);
+        String hargaNumeric = hargaWithRp.replaceAll("[^\\d]", ""); // Remove non-numeric characters (including Rp and commas)
+
+        // Convert the numeric string back to a proper integer
+        int hargaAsInt = Integer.parseInt(hargaNumeric) / 100; // Divide by 100 if the original value had decimal places
+        jTextField4.setText(String.valueOf(hargaAsInt));
     }//GEN-LAST:event_jTable1MousePressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -374,6 +392,15 @@ public class ListServiceView extends javax.swing.JFrame {
         // TODO add your handling code here:
         resetField();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        // Allow only digits
+        if (!Character.isDigit(c)) {
+            evt.consume(); // Ignore the event
+        }
+    }//GEN-LAST:event_jTextField4KeyTyped
 
     /**
      * @param args the command line arguments

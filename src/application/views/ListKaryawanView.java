@@ -9,7 +9,9 @@ import application.daoimpl.KaryawanDaoImpl;
 import application.models.KaryawanModel;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -40,10 +42,13 @@ public class ListKaryawanView extends javax.swing.JFrame {
         
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(new Object[]{"Kode", "Nama", "Jabatan", "Alamat", "Gaji"}); // Adjust column names as needed
+        
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
 
         // Populate the model with data from spareparts
         for (KaryawanModel karyawan : karyawanList) {
-            model.addRow(new Object[]{karyawan.getKode(), karyawan.getName(), karyawan.getJabatan(), karyawan.getAddress(), karyawan.getGaji()}); // Add more attributes as needed
+            String formattedPrice = currencyFormat.format(karyawan.getGaji()); // Format price as "Rp"
+            model.addRow(new Object[]{karyawan.getKode(), karyawan.getName(), karyawan.getJabatan(), karyawan.getAddress(), formattedPrice}); // Add more attributes as needed
         }
         
         // Set the table model to jTable1
@@ -183,6 +188,11 @@ public class ListKaryawanView extends javax.swing.JFrame {
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField4ActionPerformed(evt);
+            }
+        });
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField4KeyTyped(evt);
             }
         });
 
@@ -395,7 +405,15 @@ public class ListKaryawanView extends javax.swing.JFrame {
         jTextField2.setText((String) tblSparepart.getValueAt(row, 1));
         jTextField3.setText(String.valueOf(tblSparepart.getValueAt(row, 2)));
         jTextArea1.setText(String.valueOf(tblSparepart.getValueAt(row, 3)));
-        jTextField4.setText(String.valueOf(tblSparepart.getValueAt(row, 4)));
+        
+        // Extract numeric value from the "Harga" column
+        String hargaWithRp = (String) tblSparepart.getValueAt(row, 4);
+        String hargaNumeric = hargaWithRp.replaceAll("[^\\d]", ""); // Remove non-numeric characters (including Rp and commas)
+
+        // Convert the numeric string back to a proper integer
+        int hargaAsInt = Integer.parseInt(hargaNumeric) / 100; // Divide by 100 if the original value had decimal places
+        
+        jTextField4.setText(String.valueOf(hargaAsInt));
     }//GEN-LAST:event_jTable1MousePressed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -403,6 +421,15 @@ public class ListKaryawanView extends javax.swing.JFrame {
         this.dispose();
         new MainMenu().start();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        // Allow only digits
+        if (!Character.isDigit(c)) {
+            evt.consume(); // Ignore the event
+        }
+    }//GEN-LAST:event_jTextField4KeyTyped
 
     /**
      * @param args the command line arguments

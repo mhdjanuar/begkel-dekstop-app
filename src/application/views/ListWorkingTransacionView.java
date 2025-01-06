@@ -335,9 +335,20 @@ public class ListWorkingTransacionView extends javax.swing.JFrame {
             }
         });
 
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField4KeyTyped(evt);
+            }
+        });
+
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField5ActionPerformed(evt);
+            }
+        });
+        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField5KeyTyped(evt);
             }
         });
 
@@ -425,6 +436,12 @@ public class ListWorkingTransacionView extends javax.swing.JFrame {
         });
 
         jTextField2.setEnabled(false);
+
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField3KeyTyped(evt);
+            }
+        });
 
         jLabel7.setText("Jumlah");
 
@@ -779,6 +796,33 @@ public class ListWorkingTransacionView extends javax.swing.JFrame {
         selectedItemsSparepart.removeIf(service -> service.getKode().equals(kode));
         showTableChoooseSparepart();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTextField3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        // Allow only digits
+        if (!Character.isDigit(c)) {
+            evt.consume(); // Ignore the event
+        }
+    }//GEN-LAST:event_jTextField3KeyTyped
+
+    private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        // Allow only digits
+        if (!Character.isDigit(c)) {
+            evt.consume(); // Ignore the event
+        }
+    }//GEN-LAST:event_jTextField4KeyTyped
+
+    private void jTextField5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        // Allow only digits
+        if (!Character.isDigit(c)) {
+            evt.consume(); // Ignore the event
+        }
+    }//GEN-LAST:event_jTextField5KeyTyped
 
     /**
      * @param args the command line arguments

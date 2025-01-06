@@ -118,8 +118,8 @@ LIMIT 1]]>
 					<text><![CDATA[Kec Cilandak, Kota Jakarta Selatan]]></text>
 				</staticText>
 				<image>
-					<reportElement x="40" y="25" width="50" height="50" uuid="8f4dd41d-2de6-40fb-9201-0886d91b9b74"/>
-					<imageExpression><![CDATA[$P{PATH}+"invoice_logo.png"]]></imageExpression>
+					<reportElement x="40" y="25" width="100" height="100" uuid="8f4dd41d-2de6-40fb-9201-0886d91b9b74"/>
+					<imageExpression><![CDATA[$P{PATH}+"invoice_logo.jpeg"]]></imageExpression>
 				</image>
 			</frame>
 		</band>

@@ -9,7 +9,9 @@ import application.models.SparepartModel;
 import application.dao.SparepartDao;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -41,10 +43,13 @@ public class ListSparePartView extends javax.swing.JFrame {
         
         DefaultTableModel model = new DefaultTableModel();
         model.setColumnIdentifiers(new Object[]{"Kode", "Nama", "Harga", "Stok"}); // Adjust column names as needed
+        
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
 
         // Populate the model with data from spareparts
         for (SparepartModel sparepart : spareparts) {
-            model.addRow(new Object[]{sparepart.getKode(), sparepart.getName(), sparepart.getPrice(), sparepart.getStock()}); // Add more attributes as needed
+            String formattedPrice = currencyFormat.format(sparepart.getPrice()); // Format price as "Rp"
+            model.addRow(new Object[]{sparepart.getKode(), sparepart.getName(), formattedPrice, sparepart.getStock()}); // Add more attributes as needed
         }
         
         // Set the table model to jTable1
@@ -186,6 +191,18 @@ public class ListSparePartView extends javax.swing.JFrame {
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField3KeyTyped(evt);
+            }
+        });
+
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField4KeyTyped(evt);
             }
         });
 
@@ -351,7 +368,15 @@ public class ListSparePartView extends javax.swing.JFrame {
         
         jTextField1.setText((String) tblSparepart.getValueAt(row, 0));
         jTextField2.setText((String) tblSparepart.getValueAt(row, 1));
-        jTextField3.setText(String.valueOf(tblSparepart.getValueAt(row, 2)));
+        
+         // Extract numeric value from the "Harga" column
+        String hargaWithRp = (String) tblSparepart.getValueAt(row, 2);
+        String hargaNumeric = hargaWithRp.replaceAll("[^\\d]", ""); // Remove non-numeric characters (including Rp and commas)
+
+        // Convert the numeric string back to a proper integer
+        int hargaAsInt = Integer.parseInt(hargaNumeric) / 100; // Divide by 100 if the original value had decimal places
+        jTextField3.setText(String.valueOf(hargaAsInt)); // Set the adjusted value in jTextField3
+        
         jTextField4.setText(String.valueOf(tblSparepart.getValueAt(row, 3)));
     }//GEN-LAST:event_jTable1MousePressed
 
@@ -376,6 +401,24 @@ public class ListSparePartView extends javax.swing.JFrame {
         this.dispose();
         new MainMenu().start();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        // Allow only digits
+        if (!Character.isDigit(c)) {
+            evt.consume(); // Ignore the event
+        }
+    }//GEN-LAST:event_jTextField3KeyTyped
+
+    private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        // Allow only digits
+        if (!Character.isDigit(c)) {
+            evt.consume(); // Ignore the event
+        }
+    }//GEN-LAST:event_jTextField4KeyTyped
 
     /**
      * @param args the command line arguments
